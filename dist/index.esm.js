@@ -61,10 +61,17 @@ var beep = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var beepChain = function beepChain() {
+  return new BeepChain();
+};
 var BeepChain = /*#__PURE__*/function () {
   function BeepChain() {
+    var _this = this;
     _classCallCheck(this, BeepChain);
     _defineProperty(this, "actions", []);
+    setTimeout(function () {
+      return _this.play();
+    });
   }
   return _createClass(BeepChain, [{
     key: "beep",
@@ -165,7 +172,4 @@ var BeepChain = /*#__PURE__*/function () {
     }()
   }]);
 }();
-function beepChain() {
-  return new BeepChain();
-}
 export { average, beep, beepChain, fixednum, minmax, sleep };

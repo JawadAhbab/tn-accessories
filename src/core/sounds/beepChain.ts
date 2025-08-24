@@ -5,8 +5,14 @@ type Action =
   | { type: 'beep'; await?: boolean; params: BeepParams }
   | { type: 'wait'; duration: number }
 
+export const beepChain = () => new BeepChain()
+
 class BeepChain {
   private actions: Action[] = []
+  constructor() {
+    setTimeout(() => this.play())
+  }
+
   public beep(...params: BeepParams) {
     this.actions.push({ type: 'beep', params })
     return this
@@ -19,15 +25,11 @@ class BeepChain {
     this.actions.push({ type: 'wait', duration })
     return this
   }
-  public async play() {
+  private async play() {
     for (const action of this.actions) {
       if (action.type === 'wait') await sleep(action.duration)
       else if (action.await) await beep(...action.params)
       else beep(...action.params)
     }
   }
-}
-
-export function beepChain() {
-  return new BeepChain()
 }
