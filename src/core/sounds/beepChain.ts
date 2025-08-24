@@ -1,3 +1,4 @@
+import { sleep } from '../misc/sleep'
 import { beep } from './beep'
 type BeepParams = Parameters<typeof beep>
 type Action = { type: 'beep'; params: BeepParams } | { type: 'wait'; duration: number }
@@ -12,9 +13,10 @@ export function beepChain() {
     wait(duration = 1000) {
       actions.push({ type: 'wait', duration })
     },
-    play() {
+    async play() {
       for (const action of actions) {
-        // if(action)
+        if (action.type === 'wait') await sleep(action.duration)
+        else await beep(...action.params)
       }
     },
   }
