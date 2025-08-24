@@ -1,8 +1,10 @@
 import { beep } from './beep';
 type BeepParams = Parameters<typeof beep>;
-export declare function beepChain(): {
-    beep(type?: OscillatorType | undefined, frequency?: number | undefined, duration?: number | undefined, volume?: number | undefined): /*elided*/ any;
-    wait(duration?: number): void;
+declare class BeepChain {
+    private actions;
+    beep(...params: BeepParams): this;
+    wait(duration?: number): this;
     play(): Promise<void>;
-};
+}
+export declare function beepChain(): BeepChain;
 export {};

@@ -1,4 +1,8 @@
 import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
+import _createForOfIteratorHelper from "@babel/runtime/helpers/esm/createForOfIteratorHelper";
+import _classCallCheck from "@babel/runtime/helpers/esm/classCallCheck";
+import _createClass from "@babel/runtime/helpers/esm/createClass";
+import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _regenerator from "@babel/runtime/helpers/esm/regenerator";
 import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
 var average = function average(numbers) {
@@ -57,61 +61,89 @@ var beep = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-function beepChain() {
-  var actions = [];
-  return {
-    beep: function beep() {
+var BeepChain = /*#__PURE__*/function () {
+  function BeepChain() {
+    _classCallCheck(this, BeepChain);
+    _defineProperty(this, "actions", []);
+  }
+  return _createClass(BeepChain, [{
+    key: "beep",
+    value: function beep() {
       for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
         params[_key] = arguments[_key];
       }
-      actions.push({
+      this.actions.push({
         type: 'beep',
         params: params
       });
       return this;
-    },
-    wait: function wait() {
+    }
+  }, {
+    key: "wait",
+    value: function wait() {
       var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
-      actions.push({
+      this.actions.push({
         type: 'wait',
         duration: duration
       });
-    },
-    play: function play() {
-      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-        var _i, _actions, action;
+      return this;
+    }
+  }, {
+    key: "play",
+    value: function () {
+      var _play = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var _iterator, _step, action, _t;
         return _regenerator().w(function (_context2) {
-          while (1) switch (_context2.n) {
+          while (1) switch (_context2.p = _context2.n) {
             case 0:
-              _i = 0, _actions = actions;
-            case 1:
-              if (!(_i < _actions.length)) {
-                _context2.n = 5;
-                break;
-              }
-              action = _actions[_i];
-              if (!(action.type === 'wait')) {
-                _context2.n = 3;
-                break;
-              }
-              _context2.n = 2;
-              return sleep(action.duration);
+              _iterator = _createForOfIteratorHelper(this.actions);
+              _context2.p = 1;
+              _iterator.s();
             case 2:
-              _context2.n = 4;
-              break;
+              if ((_step = _iterator.n()).done) {
+                _context2.n = 6;
+                break;
+              }
+              action = _step.value;
+              if (!(action.type === 'wait')) {
+                _context2.n = 4;
+                break;
+              }
+              _context2.n = 3;
+              return sleep(action.duration);
             case 3:
-              _context2.n = 4;
-              return beep.apply(void 0, _toConsumableArray(action.params));
-            case 4:
-              _i++;
-              _context2.n = 1;
+              _context2.n = 5;
               break;
+            case 4:
+              _context2.n = 5;
+              return beep.apply(void 0, _toConsumableArray(action.params));
             case 5:
+              _context2.n = 2;
+              break;
+            case 6:
+              _context2.n = 8;
+              break;
+            case 7:
+              _context2.p = 7;
+              _t = _context2.v;
+              _iterator.e(_t);
+            case 8:
+              _context2.p = 8;
+              _iterator.f();
+              return _context2.f(8);
+            case 9:
               return _context2.a(2);
           }
-        }, _callee2);
-      }))();
-    }
-  };
+        }, _callee2, this, [[1, 7, 8, 9]]);
+      }));
+      function play() {
+        return _play.apply(this, arguments);
+      }
+      return play;
+    }()
+  }]);
+}();
+function beepChain() {
+  return new BeepChain();
 }
 export { average, beep, beepChain, fixednum, minmax, sleep };
