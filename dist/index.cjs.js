@@ -83,7 +83,7 @@ var BeepChain = /*#__PURE__*/function () {
   }, {
     key: "wait",
     value: function wait() {
-      var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
       this.actions.push({
         type: 'wait',
         duration: duration

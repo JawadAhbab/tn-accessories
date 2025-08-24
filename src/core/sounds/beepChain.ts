@@ -9,7 +9,7 @@ class BeepChain {
     this.actions.push({ type: 'beep', params })
     return this
   }
-  public wait(duration = 1000) {
+  public wait(duration = 300) {
     this.actions.push({ type: 'wait', duration })
     return this
   }
