@@ -11,3 +11,9 @@ minmax(num, min, max)
 ```ts
 beep(type?, frequency?, duration?, volume?)
 ```
+
+## Misc
+
+```ts
+sleep(ms)
+```
