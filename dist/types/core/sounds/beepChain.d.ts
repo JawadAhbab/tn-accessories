@@ -3,6 +3,7 @@ type BeepParams = Parameters<typeof beep>;
 declare class BeepChain {
     private actions;
     beep(...params: BeepParams): this;
+    beepAwait(...params: BeepParams): this;
     wait(duration?: number): this;
     play(): Promise<void>;
 }

@@ -79,6 +79,19 @@ var BeepChain = /*#__PURE__*/function () {
       return this;
     }
   }, {
+    key: "beepAwait",
+    value: function beepAwait() {
+      for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        params[_key2] = arguments[_key2];
+      }
+      this.actions.push({
+        type: 'beep',
+        "await": true,
+        params: params
+      });
+      return this;
+    }
+  }, {
     key: "wait",
     value: function wait() {
       var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
@@ -101,7 +114,7 @@ var BeepChain = /*#__PURE__*/function () {
               _iterator.s();
             case 2:
               if ((_step = _iterator.n()).done) {
-                _context2.n = 6;
+                _context2.n = 8;
                 break;
               }
               action = _step.value;
@@ -112,29 +125,38 @@ var BeepChain = /*#__PURE__*/function () {
               _context2.n = 3;
               return sleep(action.duration);
             case 3:
-              _context2.n = 5;
+              _context2.n = 7;
               break;
             case 4:
+              if (!action["await"]) {
+                _context2.n = 6;
+                break;
+              }
               _context2.n = 5;
               return beep.apply(void 0, _toConsumableArray(action.params));
             case 5:
-              _context2.n = 2;
+              _context2.n = 7;
               break;
             case 6:
-              _context2.n = 8;
-              break;
+              beep.apply(void 0, _toConsumableArray(action.params));
             case 7:
-              _context2.p = 7;
+              _context2.n = 2;
+              break;
+            case 8:
+              _context2.n = 10;
+              break;
+            case 9:
+              _context2.p = 9;
               _t = _context2.v;
               _iterator.e(_t);
-            case 8:
-              _context2.p = 8;
+            case 10:
+              _context2.p = 10;
               _iterator.f();
-              return _context2.f(8);
-            case 9:
+              return _context2.f(10);
+            case 11:
               return _context2.a(2);
           }
-        }, _callee2, this, [[1, 7, 8, 9]]);
+        }, _callee2, this, [[1, 9, 10, 11]]);
       }));
       function play() {
         return _play.apply(this, arguments);
