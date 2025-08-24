@@ -10,6 +10,7 @@ minmax(num, min, max)
 
 ```ts
 beep(type?, frequency?, duration?, volume?)
+beepChain().beep().wait().beep()
 ```
 
 ## Misc
