@@ -1,5 +1,5 @@
 import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
-import _regeneratorRuntime from "@babel/runtime/helpers/esm/regeneratorRuntime";
+import _regenerator from "@babel/runtime/helpers/esm/regenerator";
 import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
 var average = function average(numbers) {
   return numbers.reduce(function (a, b) {
@@ -19,7 +19,7 @@ var sleep = function sleep(ms) {
   });
 };
 var beep = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
     var type,
       frequency,
       duration,
@@ -28,8 +28,8 @@ var beep = /*#__PURE__*/function () {
       oscillator,
       gainNode,
       _args = arguments;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
         case 0:
           type = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'sine';
           frequency = _args.length > 1 && _args[1] !== undefined ? _args[1] : 500;
@@ -46,11 +46,10 @@ var beep = /*#__PURE__*/function () {
           gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
           oscillator.start(audioContext.currentTime);
           oscillator.stop(audioContext.currentTime + duration / 1000);
-          _context.next = 17;
+          _context.n = 1;
           return sleep(duration);
-        case 17:
-        case "end":
-          return _context.stop();
+        case 1:
+          return _context.a(2);
       }
     }, _callee);
   }));
@@ -79,37 +78,36 @@ function beepChain() {
       });
     },
     play: function play() {
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
         var _i, _actions, action;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.n) {
             case 0:
               _i = 0, _actions = actions;
             case 1:
               if (!(_i < _actions.length)) {
-                _context2.next = 13;
+                _context2.n = 5;
                 break;
               }
               action = _actions[_i];
               if (!(action.type === 'wait')) {
-                _context2.next = 8;
+                _context2.n = 3;
                 break;
               }
-              _context2.next = 6;
+              _context2.n = 2;
               return sleep(action.duration);
-            case 6:
-              _context2.next = 10;
+            case 2:
+              _context2.n = 4;
               break;
-            case 8:
-              _context2.next = 10;
+            case 3:
+              _context2.n = 4;
               return beep.apply(void 0, _toConsumableArray(action.params));
-            case 10:
+            case 4:
               _i++;
-              _context2.next = 1;
+              _context2.n = 1;
               break;
-            case 13:
-            case "end":
-              return _context2.stop();
+            case 5:
+              return _context2.a(2);
           }
         }, _callee2);
       }))();
