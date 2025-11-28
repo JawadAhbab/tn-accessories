@@ -7,6 +7,44 @@ var _createClass = require("@babel/runtime/helpers/createClass")["default"];
 var _defineProperty = require("@babel/runtime/helpers/defineProperty")["default"];
 var _regenerator = require("@babel/runtime/helpers/regenerator")["default"];
 var _asyncToGenerator = require("@babel/runtime/helpers/asyncToGenerator")["default"];
+var ampmBn = function ampmBn(dt) {
+  var hr = +dt.format('H');
+  if (hr < 4) return 'রাত';
+  if (hr < 6) return 'ভোর';
+  if (hr < 12) return 'সকাল';
+  if (hr < 15) return 'দুপুর';
+  if (hr < 18) return 'বিকাল';
+  if (hr < 20) return 'সন্ধ্যা';
+  return 'রাত';
+};
+var map$2 = {
+  jan: 'জানুয়ারি',
+  january: 'জানুয়ারি',
+  feb: 'ফেব্রুয়ারি',
+  february: 'ফেব্রুয়ারি',
+  mar: 'মার্চ',
+  march: 'মার্চ',
+  apr: 'এপ্রিল',
+  april: 'এপ্রিল',
+  may: 'মে',
+  jun: 'জুন',
+  june: 'জুন',
+  jul: 'জুলাই',
+  july: 'জুলাই',
+  aug: 'আগস্ট',
+  august: 'আগস্ট',
+  sep: 'সেপ্টেম্বর',
+  september: 'সেপ্টেম্বর',
+  oct: 'অক্টোবর',
+  october: 'অক্টোবর',
+  nov: 'নভেম্বর',
+  november: 'নভেম্বর',
+  dec: 'ডিসেম্বর',
+  december: 'ডিসেম্বর'
+};
+var monthBn = function monthBn(month) {
+  return map$2[month.toLowerCase()];
+};
 var map$1 = {
   '0': '০',
   '1': '১',
@@ -216,11 +254,13 @@ var BeepChain = /*#__PURE__*/function () {
     }()
   }]);
 }();
+exports.ampmBn = ampmBn;
 exports.average = average;
 exports.beep = beep;
 exports.beepChain = beepChain;
 exports.fixednum = fixednum;
 exports.minmax = minmax;
+exports.monthBn = monthBn;
 exports.numBn = numBn;
 exports.numBn2En = numBn2En;
 exports.numBnLocale = numBnLocale;

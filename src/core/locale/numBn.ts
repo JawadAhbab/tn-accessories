@@ -1,5 +1,4 @@
 import { ObjectOf } from 'tn-typescript'
-
 const map: ObjectOf<string> = {
   '0': '০',
   '1': '১',

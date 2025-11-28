@@ -1,3 +1,5 @@
+export { ampmBn } from './core/locale/ampmBn'
+export { monthBn } from './core/locale/monthBn'
 export { numBn } from './core/locale/numBn'
 export { numBn2En } from './core/locale/numBn2En'
 export { numBnLocale } from './core/locale/numBnLocale'
