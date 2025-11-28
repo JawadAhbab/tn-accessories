@@ -7,6 +7,48 @@ var _createClass = require("@babel/runtime/helpers/createClass")["default"];
 var _defineProperty = require("@babel/runtime/helpers/defineProperty")["default"];
 var _regenerator = require("@babel/runtime/helpers/regenerator")["default"];
 var _asyncToGenerator = require("@babel/runtime/helpers/asyncToGenerator")["default"];
+var map$1 = {
+  '0': '০',
+  '1': '১',
+  '2': '২',
+  '3': '৩',
+  '4': '৪',
+  '5': '৫',
+  '6': '৬',
+  '7': '৭',
+  '8': '৮',
+  '9': '৯'
+};
+var numBn = function numBn(str) {
+  return str.toString().split('').map(function (i) {
+    return map$1[i] === undefined ? i : map$1[i];
+  }).join('');
+};
+var map = {
+  '০': '0',
+  '১': '1',
+  '২': '2',
+  '৩': '3',
+  '৪': '4',
+  '৫': '5',
+  '৬': '6',
+  '৭': '7',
+  '৮': '8',
+  '৯': '9'
+};
+var numBn2En = function numBn2En(str) {
+  return str.split('').map(function (i) {
+    return map[i] === undefined ? i : map[i];
+  }).join('');
+};
+var numLocale = function numLocale(num) {
+  return num.toLocaleString('en-In', {
+    maximumFractionDigits: 2
+  });
+};
+var numBnLocale = function numBnLocale(num) {
+  return numBn(numLocale(num));
+};
 var average = function average(numbers) {
   return numbers.reduce(function (a, b) {
     return a + b;
@@ -179,4 +221,8 @@ exports.beep = beep;
 exports.beepChain = beepChain;
 exports.fixednum = fixednum;
 exports.minmax = minmax;
+exports.numBn = numBn;
+exports.numBn2En = numBn2En;
+exports.numBnLocale = numBnLocale;
+exports.numLocale = numLocale;
 exports.sleep = sleep;

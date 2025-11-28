@@ -5,6 +5,48 @@ import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _regenerator from "@babel/runtime/helpers/esm/regenerator";
 import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
+var map$1 = {
+  '0': '০',
+  '1': '১',
+  '2': '২',
+  '3': '৩',
+  '4': '৪',
+  '5': '৫',
+  '6': '৬',
+  '7': '৭',
+  '8': '৮',
+  '9': '৯'
+};
+var numBn = function numBn(str) {
+  return str.toString().split('').map(function (i) {
+    return map$1[i] === undefined ? i : map$1[i];
+  }).join('');
+};
+var map = {
+  '০': '0',
+  '১': '1',
+  '২': '2',
+  '৩': '3',
+  '৪': '4',
+  '৫': '5',
+  '৬': '6',
+  '৭': '7',
+  '৮': '8',
+  '৯': '9'
+};
+var numBn2En = function numBn2En(str) {
+  return str.split('').map(function (i) {
+    return map[i] === undefined ? i : map[i];
+  }).join('');
+};
+var numLocale = function numLocale(num) {
+  return num.toLocaleString('en-In', {
+    maximumFractionDigits: 2
+  });
+};
+var numBnLocale = function numBnLocale(num) {
+  return numBn(numLocale(num));
+};
 var average = function average(numbers) {
   return numbers.reduce(function (a, b) {
     return a + b;
@@ -172,4 +214,4 @@ var BeepChain = /*#__PURE__*/function () {
     }()
   }]);
 }();
-export { average, beep, beepChain, fixednum, minmax, sleep };
+export { average, beep, beepChain, fixednum, minmax, numBn, numBn2En, numBnLocale, numLocale, sleep };
