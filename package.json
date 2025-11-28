@@ -13,19 +13,20 @@
   "author": "Turnova",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.28.3"
+    "@babel/runtime": "^7.28.4",
+    "tn-typescript": "^2.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
-    "@babel/core": "^7.28.3",
-    "@babel/plugin-transform-runtime": "^7.28.3",
-    "@babel/preset-env": "^7.28.3",
-    "@rollup/plugin-babel": "^6.0.4",
+    "@babel/core": "^7.28.5",
+    "@babel/plugin-transform-runtime": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
     "@swc-node/register": "^1.11.1",
-    "@swc/core": "^1.13.4",
-    "@types/node": "^24.3.0",
-    "rollup": "^4.48.0",
+    "@swc/core": "^1.15.3",
+    "@types/node": "^24.10.1",
+    "rollup": "^4.53.3",
     "rollup-plugin-typescript2": "^0.36.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
