@@ -102,13 +102,13 @@ var sleep = function sleep(ms) {
     return setTimeout(resolve, ms);
   });
 };
+var audioContext = new window.AudioContext();
 var beep = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
     var type,
       frequency,
       duration,
       volume,
-      audioContext,
       oscillator,
       gainNode,
       _args = arguments;
@@ -119,7 +119,6 @@ var beep = /*#__PURE__*/function () {
           frequency = _args.length > 1 && _args[1] !== undefined ? _args[1] : 500;
           duration = _args.length > 2 && _args[2] !== undefined ? _args[2] : 300;
           volume = _args.length > 3 && _args[3] !== undefined ? _args[3] : 1;
-          audioContext = new window.AudioContext();
           oscillator = audioContext.createOscillator();
           gainNode = audioContext.createGain();
           oscillator.connect(gainNode);

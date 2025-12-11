@@ -1,4 +1,5 @@
 import { sleep } from '../misc/sleep'
+const audioContext = new window.AudioContext()
 
 export const beep = async (
   type: OscillatorType = 'sine',
@@ -6,7 +7,6 @@ export const beep = async (
   duration = 300,
   volume = 1
 ) => {
-  const audioContext = new window.AudioContext()
   const oscillator = audioContext.createOscillator()
   const gainNode = audioContext.createGain()
 
