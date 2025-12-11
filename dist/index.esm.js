@@ -102,7 +102,7 @@ var sleep = function sleep(ms) {
     return setTimeout(resolve, ms);
   });
 };
-var audioContext = new window.AudioContext();
+var ctx = new window.AudioContext();
 var beep = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
     var type,
@@ -119,16 +119,16 @@ var beep = /*#__PURE__*/function () {
           frequency = _args.length > 1 && _args[1] !== undefined ? _args[1] : 500;
           duration = _args.length > 2 && _args[2] !== undefined ? _args[2] : 300;
           volume = _args.length > 3 && _args[3] !== undefined ? _args[3] : 1;
-          oscillator = audioContext.createOscillator();
-          gainNode = audioContext.createGain();
+          oscillator = ctx.createOscillator();
+          gainNode = ctx.createGain();
           oscillator.connect(gainNode);
-          gainNode.connect(audioContext.destination);
+          gainNode.connect(ctx.destination);
           oscillator.frequency.value = frequency;
           oscillator.type = type;
-          gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
-          oscillator.start(audioContext.currentTime);
-          oscillator.stop(audioContext.currentTime + duration / 1000);
+          gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
+          oscillator.start(ctx.currentTime);
+          oscillator.stop(ctx.currentTime + duration / 1000);
           _context.n = 1;
           return sleep(duration);
         case 1:

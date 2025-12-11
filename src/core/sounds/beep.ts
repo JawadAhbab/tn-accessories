@@ -1,5 +1,5 @@
 import { sleep } from '../misc/sleep'
-const audioContext = new window.AudioContext()
+const ctx = new window.AudioContext()
 
 export const beep = async (
   type: OscillatorType = 'sine',
@@ -7,20 +7,20 @@ export const beep = async (
   duration = 300,
   volume = 1
 ) => {
-  const oscillator = audioContext.createOscillator()
-  const gainNode = audioContext.createGain()
+  const oscillator = ctx.createOscillator()
+  const gainNode = ctx.createGain()
 
   oscillator.connect(gainNode)
-  gainNode.connect(audioContext.destination)
+  gainNode.connect(ctx.destination)
 
   oscillator.frequency.value = frequency
   oscillator.type = type
 
-  gainNode.gain.setValueAtTime(volume, audioContext.currentTime)
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000)
+  gainNode.gain.setValueAtTime(volume, ctx.currentTime)
+  gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000)
 
-  oscillator.start(audioContext.currentTime)
-  oscillator.stop(audioContext.currentTime + duration / 1000)
+  oscillator.start(ctx.currentTime)
+  oscillator.stop(ctx.currentTime + duration / 1000)
 
   await sleep(duration)
 }
