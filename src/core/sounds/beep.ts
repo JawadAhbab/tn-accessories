@@ -1,26 +1,34 @@
-import { sleep } from '../misc/sleep'
-const ctx = new window.AudioContext()
+import { beepAudio } from './accessories/beepAudio'
+let audioTime = 0
 
-export const beep = async (
+export const beep = (
   type: OscillatorType = 'sine',
   frequency = 500,
   duration = 300,
   volume = 1
 ) => {
-  const oscillator = ctx.createOscillator()
-  const gainNode = ctx.createGain()
+  if (!beepAudio) return
+  if (beepAudio.state === 'suspended') beepAudio.resume()
+  const now = beepAudio.currentTime
+  if (audioTime < now) audioTime = now
 
-  oscillator.connect(gainNode)
-  gainNode.connect(ctx.destination)
+  const start = audioTime
+  const end = start + duration / 1000
 
-  oscillator.frequency.value = frequency
-  oscillator.type = type
+  const osc = beepAudio.createOscillator()
+  const gain = beepAudio.createGain()
 
-  gainNode.gain.setValueAtTime(volume, ctx.currentTime)
-  gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000)
+  osc.connect(gain)
+  gain.connect(beepAudio.destination)
 
-  oscillator.start(ctx.currentTime)
-  oscillator.stop(ctx.currentTime + duration / 1000)
+  osc.type = type
+  osc.frequency.setValueAtTime(frequency, start)
 
-  await sleep(duration)
+  gain.gain.setValueAtTime(volume, start)
+  gain.gain.exponentialRampToValueAtTime(0.01, end)
+
+  osc.start(start)
+  osc.stop(end)
+
+  audioTime = end
 }
