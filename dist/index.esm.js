@@ -1,6 +1,11 @@
+import _regeneratorValues from "@babel/runtime/helpers/esm/regeneratorValues";
+import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
+import _createForOfIteratorHelper from "@babel/runtime/helpers/esm/createForOfIteratorHelper";
 import _classCallCheck from "@babel/runtime/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime/helpers/esm/createClass";
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
+import _regenerator from "@babel/runtime/helpers/esm/regenerator";
+import _asyncToGenerator from "@babel/runtime/helpers/esm/asyncToGenerator";
 var ampmBn = function ampmBn(dt) {
   var hr = +dt.format('H');
   if (hr < 4) return 'রাত';
@@ -94,55 +99,177 @@ var minmax = function minmax(num, min, max) {
   return Math.min(Math.max(num, min), max);
 };
 var beepAudio = typeof window !== 'undefined' ? new AudioContext() : null;
-var audioTime = 0;
-var _beep = function beep() {
-  var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'sine';
-  var frequency = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
-  var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 300;
-  var volume = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-  if (!beepAudio) return;
-  if (beepAudio.state === 'suspended') beepAudio.resume();
-  var now = beepAudio.currentTime;
-  if (audioTime < now) audioTime = now;
-  var start = audioTime;
-  var end = start + duration / 1000;
-  var osc = beepAudio.createOscillator();
-  var gain = beepAudio.createGain();
-  osc.connect(gain);
-  gain.connect(beepAudio.destination);
-  osc.type = type;
-  osc.frequency.setValueAtTime(frequency, start);
-  gain.gain.setValueAtTime(volume, start);
-  gain.gain.exponentialRampToValueAtTime(0.01, end);
-  osc.start(start);
-  osc.stop(end);
-  audioTime = end;
-};
+var beep = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+    var type,
+      frequency,
+      duration,
+      volume,
+      osc,
+      gain,
+      now,
+      end,
+      _args = arguments;
+    return _regenerator().w(function (_context) {
+      while (1) switch (_context.n) {
+        case 0:
+          type = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'sine';
+          frequency = _args.length > 1 && _args[1] !== undefined ? _args[1] : 500;
+          duration = _args.length > 2 && _args[2] !== undefined ? _args[2] : 300;
+          volume = _args.length > 3 && _args[3] !== undefined ? _args[3] : 1;
+          if (beepAudio) {
+            _context.n = 1;
+            break;
+          }
+          return _context.a(2);
+        case 1:
+          if (!(beepAudio.state === 'suspended')) {
+            _context.n = 2;
+            break;
+          }
+          _context.n = 2;
+          return beepAudio.resume();
+        case 2:
+          osc = beepAudio.createOscillator();
+          gain = beepAudio.createGain();
+          osc.type = type;
+          osc.frequency.value = frequency;
+          osc.connect(gain);
+          gain.connect(beepAudio.destination);
+          now = beepAudio.currentTime;
+          end = now + duration / 1000;
+          gain.gain.setValueAtTime(volume, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, end);
+          osc.start(now);
+          osc.stop(end);
+          return _context.a(2, new Promise(function (res) {
+            return setTimeout(res, duration);
+          }));
+      }
+    }, _callee);
+  }));
+  return function beep() {
+    return _ref.apply(this, arguments);
+  };
+}();
 var beepChain = function beepChain() {
   return new BeepChain();
 };
 var BeepChain = /*#__PURE__*/function () {
   function BeepChain() {
     _classCallCheck(this, BeepChain);
-    _defineProperty(this, "audioTime", 0);
+    _defineProperty(this, "actions", []);
   }
   return _createClass(BeepChain, [{
     key: "beep",
     value: function beep() {
-      _beep.apply(void 0, arguments);
+      for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+      }
+      this.actions.push({
+        type: 'beep',
+        params: params
+      });
+      return this;
+    }
+  }, {
+    key: "beepAwait",
+    value: function beepAwait() {
+      for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        params[_key2] = arguments[_key2];
+      }
+      this.actions.push({
+        type: 'beep',
+        "await": true,
+        params: params
+      });
       return this;
     }
   }, {
     key: "wait",
     value: function wait() {
       var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
-      var d = duration / 1000;
-      if (beepAudio) {
-        if (this.audioTime < beepAudio.currentTime) this.audioTime = beepAudio.currentTime;
-        this.audioTime += d;
-      }
+      this.actions.push({
+        type: 'wait',
+        duration: duration
+      });
       return this;
     }
+  }, {
+    key: "play",
+    value: function () {
+      var _play = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var _iterator, _step, _loop, _t;
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.p = _context3.n) {
+            case 0:
+              _iterator = _createForOfIteratorHelper(this.actions);
+              _context3.p = 1;
+              _loop = /*#__PURE__*/_regenerator().m(function _loop() {
+                var a;
+                return _regenerator().w(function (_context2) {
+                  while (1) switch (_context2.n) {
+                    case 0:
+                      a = _step.value;
+                      if (!(a.type === 'wait')) {
+                        _context2.n = 2;
+                        break;
+                      }
+                      _context2.n = 1;
+                      return new Promise(function (r) {
+                        return setTimeout(r, a.duration);
+                      });
+                    case 1:
+                      _context2.n = 5;
+                      break;
+                    case 2:
+                      if (!a["await"]) {
+                        _context2.n = 4;
+                        break;
+                      }
+                      _context2.n = 3;
+                      return beep.apply(void 0, _toConsumableArray(a.params));
+                    case 3:
+                      _context2.n = 5;
+                      break;
+                    case 4:
+                      beep.apply(void 0, _toConsumableArray(a.params));
+                    case 5:
+                      return _context2.a(2);
+                  }
+                }, _loop);
+              });
+              _iterator.s();
+            case 2:
+              if ((_step = _iterator.n()).done) {
+                _context3.n = 4;
+                break;
+              }
+              return _context3.d(_regeneratorValues(_loop()), 3);
+            case 3:
+              _context3.n = 2;
+              break;
+            case 4:
+              _context3.n = 6;
+              break;
+            case 5:
+              _context3.p = 5;
+              _t = _context3.v;
+              _iterator.e(_t);
+            case 6:
+              _context3.p = 6;
+              _iterator.f();
+              return _context3.f(6);
+            case 7:
+              return _context3.a(2);
+          }
+        }, _callee2, this, [[1, 5, 6, 7]]);
+      }));
+      function play() {
+        return _play.apply(this, arguments);
+      }
+      return play;
+    }()
   }]);
 }();
 var sleep = function sleep(ms) {
@@ -150,4 +277,4 @@ var sleep = function sleep(ms) {
     return setTimeout(resolve, ms);
   });
 };
-export { ampmBn, average, _beep as beep, beepChain, fixednum, minmax, monthBn, numBn, numBn2En, numBnLocale, numLocale, sleep };
+export { ampmBn, average, beep, beepChain, fixednum, minmax, monthBn, numBn, numBn2En, numBnLocale, numLocale, sleep };

@@ -1,22 +1,38 @@
-import { beepAudio } from './accessories/beepAudio'
 import { beep } from './beep'
+type BeepParams = Parameters<typeof beep>
+type Action =
+  | { type: 'beep'; await?: boolean; params: BeepParams }
+  | { type: 'wait'; duration: number }
 
 export const beepChain = () => new BeepChain()
 
 class BeepChain {
-  private audioTime = 0
+  private actions: Action[] = []
 
   beep(...params: Parameters<typeof beep>) {
-    beep(...params)
+    this.actions.push({ type: 'beep', params })
+    return this
+  }
+
+  beepAwait(...params: Parameters<typeof beep>) {
+    this.actions.push({ type: 'beep', await: true, params })
     return this
   }
 
   wait(duration = 300) {
-    const d = duration / 1000
-    if (beepAudio) {
-      if (this.audioTime < beepAudio.currentTime) this.audioTime = beepAudio.currentTime
-      this.audioTime += d
-    }
+    this.actions.push({ type: 'wait', duration })
     return this
+  }
+
+  async play() {
+    for (const a of this.actions) {
+      if (a.type === 'wait') {
+        await new Promise((r) => setTimeout(r, a.duration))
+      } else if (a.await) {
+        await beep(...a.params)
+      } else {
+        beep(...a.params)
+      }
+    }
   }
 }

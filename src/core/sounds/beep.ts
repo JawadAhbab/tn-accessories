@@ -1,34 +1,31 @@
 import { beepAudio } from './accessories/beepAudio'
-let audioTime = 0
 
-export const beep = (
+export const beep = async (
   type: OscillatorType = 'sine',
   frequency = 500,
   duration = 300,
   volume = 1
 ) => {
   if (!beepAudio) return
-  if (beepAudio.state === 'suspended') beepAudio.resume()
-  const now = beepAudio.currentTime
-  if (audioTime < now) audioTime = now
-
-  const start = audioTime
-  const end = start + duration / 1000
+  if (beepAudio.state === 'suspended') await beepAudio.resume()
 
   const osc = beepAudio.createOscillator()
   const gain = beepAudio.createGain()
 
+  osc.type = type
+  osc.frequency.value = frequency
+
   osc.connect(gain)
   gain.connect(beepAudio.destination)
 
-  osc.type = type
-  osc.frequency.setValueAtTime(frequency, start)
+  const now = beepAudio.currentTime
+  const end = now + duration / 1000
 
-  gain.gain.setValueAtTime(volume, start)
-  gain.gain.exponentialRampToValueAtTime(0.01, end)
+  gain.gain.setValueAtTime(volume, now)
+  gain.gain.exponentialRampToValueAtTime(0.001, end)
 
-  osc.start(start)
+  osc.start(now)
   osc.stop(end)
 
-  audioTime = end
+  return new Promise((res) => setTimeout(res, duration))
 }
