@@ -159,8 +159,12 @@ var beepChain = function beepChain() {
 };
 var BeepChain = /*#__PURE__*/function () {
   function BeepChain() {
+    var _this = this;
     _classCallCheck(this, BeepChain);
     _defineProperty(this, "actions", []);
+    setTimeout(function () {
+      return _this.play();
+    });
   }
   return _createClass(BeepChain, [{
     key: "beep",
@@ -189,8 +193,7 @@ var BeepChain = /*#__PURE__*/function () {
     }
   }, {
     key: "wait",
-    value: function wait() {
-      var duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 300;
+    value: function wait(duration) {
       this.actions.push({
         type: 'wait',
         duration: duration
@@ -208,34 +211,34 @@ var BeepChain = /*#__PURE__*/function () {
               _iterator = _createForOfIteratorHelper(this.actions);
               _context3.p = 1;
               _loop = /*#__PURE__*/_regenerator().m(function _loop() {
-                var a;
+                var action;
                 return _regenerator().w(function (_context2) {
                   while (1) switch (_context2.n) {
                     case 0:
-                      a = _step.value;
-                      if (!(a.type === 'wait')) {
+                      action = _step.value;
+                      if (!(action.type === 'wait')) {
                         _context2.n = 2;
                         break;
                       }
                       _context2.n = 1;
                       return new Promise(function (r) {
-                        return setTimeout(r, a.duration);
+                        return setTimeout(r, action.duration);
                       });
                     case 1:
                       _context2.n = 5;
                       break;
                     case 2:
-                      if (!a["await"]) {
+                      if (!action["await"]) {
                         _context2.n = 4;
                         break;
                       }
                       _context2.n = 3;
-                      return beep.apply(void 0, _toConsumableArray(a.params));
+                      return beep.apply(void 0, _toConsumableArray(action.params));
                     case 3:
                       _context2.n = 5;
                       break;
                     case 4:
-                      beep.apply(void 0, _toConsumableArray(a.params));
+                      beep.apply(void 0, _toConsumableArray(action.params));
                     case 5:
                       return _context2.a(2);
                   }
